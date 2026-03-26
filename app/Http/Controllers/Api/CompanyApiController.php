@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
+use App\Http\Resources\CompanySyncResource;
 use App\Services\CompanyService;
 
 class CompanyApiController extends Controller
@@ -12,14 +13,11 @@ class CompanyApiController extends Controller
         private readonly CompanyService $companyService
     ) {}
 
-    public function sync(CompanyRequest $request)
+    public function sync(CompanyRequest $request): CompanySyncResource
     {
         $data = $request->validated();
-        $response = $this->companyService->syncCompany($data);
+        $result = $this->companyService->syncCompany($data);
 
-        return response()->json([
-            'status' => $response->status->value,
-            'company' => $response->company,
-        ]);
+        return new CompanySyncResource($result);
     }
 }

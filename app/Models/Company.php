@@ -10,4 +10,9 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = ['edrpou', 'name', 'address'];
+
+    public function versions()
+    {
+        return $this->hasMany(CompanyVersion::class);
+    }
 }

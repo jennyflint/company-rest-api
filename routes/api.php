@@ -8,4 +8,5 @@ Route::post('/company', [CompanyApiController::class, 'sync'])
     ->name('api.company.sync');
 
 Route::get('/company/{edrpou}/versions', [CompanyVersionApiController::class, 'index'])
-    ->name('api.company.versions');
+    ->name('api.company.versions')
+    ->where('edrpou', '[0-9]{8}');

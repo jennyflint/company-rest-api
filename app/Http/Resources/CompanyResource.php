@@ -14,7 +14,7 @@ class CompanyResource extends JsonResource
             'name' => $this->name,
             'edrpou' => $this->edrpou,
             'address' => $this->address,
-            'current_version' => $this->versions()->max('version') ?? 1,
+            'current_version' => $this->getCurrentVersionAttribute(),
             'history' => CompanyVersionResource::collection($this->whenLoaded('versions')),
         ];
     }

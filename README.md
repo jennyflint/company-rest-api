@@ -51,3 +51,9 @@ Headers:
     "address": "01001, Україна, м. Київ, вул. Хрещатик, 44"
 }
 ```
+
+```GET /api/company/{edrpou}/versions```
+
+Headers:
+* Accept: application/json
+* Content-Type: application/json

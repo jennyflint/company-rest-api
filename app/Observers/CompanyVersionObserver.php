@@ -3,34 +3,20 @@
 namespace App\Observers;
 
 use App\Models\Company;
+use App\Services\CompanyVersionService;
 
 class CompanyVersionObserver
 {
+    public function __construct(
+        private CompanyVersionService $versionService
+    ) {}
+
     public function saved(Company $company): void
     {
-        if ($company->wasRecentlyCreated || $company->wasChanged()) {
+        $changes = collect($company->getChanges())->except(['created_at', 'updated_at']);
 
-            $nextVersion = ($company->versions()->max('version') ?? 0) + 1;
-
-            $newData = collect($company->getAttributes())
-                ->except(['id', 'created_at', 'updated_at'])
-                ->toArray();
-
-            $oldData = [];
-
-            if (! $company->wasRecentlyCreated) {
-                $oldData = collect($company->getOriginal())
-                    ->except(['id', 'created_at', 'updated_at'])
-                    ->toArray();
-            }
-
-            $company->versions()->create([
-                'version' => $nextVersion,
-                'data' => [
-                    'new' => $newData,
-                    'old' => $oldData,
-                ],
-            ]);
+        if ($company->wasRecentlyCreated || $changes->isNotEmpty()) {
+            $this->versionService->createVersionRecord($company);
         }
     }
 }

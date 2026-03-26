@@ -15,4 +15,9 @@ class Company extends Model
     {
         return $this->hasMany(CompanyVersion::class);
     }
+
+    public function getCurrentVersionAttribute(): int
+    {
+        return $this->versions_max_version ?? 1;
+    }
 }

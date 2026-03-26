@@ -12,7 +12,8 @@ class CompanyVersionApiController extends Controller
     {
         $company = Company::with([
             'versions' => fn ($q) => $q->orderByDesc('version'),
-        ])->where('edrpou', $edrpou)
+        ])->withMax('versions', 'version')
+            ->where('edrpou', $edrpou)
             ->firstOrFail();
 
         return new CompanyResource($company);

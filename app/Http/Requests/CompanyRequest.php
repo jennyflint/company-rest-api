@@ -24,7 +24,7 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:256'],
-            'edrpou' => ['required', 'string', 'max:10'],
+            'edrpou' => ['required', 'string', 'digits:8'],
             'address' => ['required', 'string'],
         ];
     }

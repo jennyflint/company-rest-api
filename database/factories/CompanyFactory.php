@@ -19,7 +19,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'edrpou' => fake()->numerify('##########'), // 10 random digits
+            'edrpou' => fake()->numerify('########'), // 8 random digits
             'address' => fake()->address(),
         ];
     }
